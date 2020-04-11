@@ -1,0 +1,23 @@
+name: HyperCore
+version: 0.1-beta
+description: A sample plugin for spigot 1.12.2
+api-version: "1.12"
+load: POSTWORLD
+author: PatrickKR
+website: https://github.com/patrick-mc
+main: com.github.patrick.hypercore.plugin.HyperCorePlugin
+database: false
+depend: [Tap, Kotlin]
+prefix: HYPER
+commands:
+  hyper:
+    description: Hyper core game command
+    aliases: [hp]
+    permission: command.hyper
+    permission-message: You do not have permission to use hyper core game commands.
+    usage: "Usage: /<command> help"
+default-permission: op
+permissions:
+  command.hyper:
+    default: op
+    description: Hyper core game command permission

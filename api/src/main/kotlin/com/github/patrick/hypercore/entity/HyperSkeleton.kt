@@ -17,11 +17,12 @@
  * Contact me on <mailpatrickkr@gmail.com>
  */
 
-package com.github.patrick.sample
+package com.github.patrick.hypercore.entity
 
-import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.entity.LivingEntity
 
-/**
- * Sample plugin class
- */
-class SamplePlugin : JavaPlugin()
+interface HyperSkeleton {
+    fun shoot(): Unit?
+
+    val entity: LivingEntity
+}
