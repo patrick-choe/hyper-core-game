@@ -19,23 +19,18 @@
 
 package com.github.patrick.hypercore.v1_12_R1.entity
 
-import com.github.patrick.hypercore.entity.HyperEntity
+import com.github.patrick.hypercore.entity.HyperEntityManager
 import com.github.patrick.hypercore.v1_12_R1.entity.NMSHyperEntityRegistry.getInstance
 import net.minecraft.server.v1_12_R1.Entity
-import org.bukkit.Location
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld
 
 @Suppress("unused")
-class NMSHyperEntity : HyperEntity {
+class NMSHyperEntityManager : HyperEntityManager {
     override fun registerHyperEntities() {
         registerHyperEntity(51, "Skeleton", NMSHyperSkeleton::class.java)
+        registerHyperEntity(50, "Creeper", NMSHyperCreeper::class.java)
+        registerHyperEntity(54, "Zombie", NMSHyperZombie::class.java)
     }
 
     private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity?>) = getInstance().putCustomEntity(id, name, entityClass)
 
-    override fun summonSkeleton(location: Location): NMSHyperSkeleton {
-        val entity = NMSHyperSkeleton((location.world as CraftWorld).handle)
-        entity.entity.teleport(location)
-        return entity
-    }
 }

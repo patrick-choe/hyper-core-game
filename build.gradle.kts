@@ -42,6 +42,7 @@ subprojects {
     dependencies {
         if (project.name != "api") implementation(project(":api"))
         compileOnly("com.github.noonmaru:tap:1.0.1")
+        compileOnly("com.github.noonmaru:custom-entity-bukkit:1.0")
     }
 
     tasks {

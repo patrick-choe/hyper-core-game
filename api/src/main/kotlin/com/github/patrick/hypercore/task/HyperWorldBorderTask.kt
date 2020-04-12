@@ -17,25 +17,18 @@
  * Contact me on <mailpatrickkr@gmail.com>
  */
 
-package com.github.patrick.hypercore
+package com.github.patrick.hypercore.task
 
-import com.github.noonmaru.tap.LibraryLoader.load
-import com.github.patrick.hypercore.entity.HyperCreeper
-import com.github.patrick.hypercore.entity.HyperEntityManager
-import com.github.patrick.hypercore.entity.HyperSkeleton
-import com.github.patrick.hypercore.entity.HyperZombie
 import org.bukkit.entity.Player
+import org.bukkit.util.Vector
 
-object Hyper {
-    val ENTITY: HyperEntityManager = load(HyperEntityManager::class.java)
-
-    var hyperPlayer: Player? = null
-
-    var hyperTask: Runnable? = null
-
-    val hyperSkeletons = HashSet<HyperSkeleton>()
-
-    val hyperCreepers = HashMap<Int, HyperCreeper>()
-
-    val hyperZombies = HashSet<HyperZombie>()
+class HyperWorldBorderTask(private val player: Player) : Runnable {
+    override fun run() {
+        val border = player.world.worldBorder
+        val direction = player.location.direction.normalize()
+        if (direction.x == 0.0) direction.x = 0.01
+        if (direction.z == 0.0) direction.z = 0.01
+        val vector = Vector(direction.x, 0.0, direction.z).normalize()
+        border.center = border.center.add(vector.multiply(0.1))
+    }
 }

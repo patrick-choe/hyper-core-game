@@ -19,11 +19,36 @@
 
 package com.github.patrick.hypercore.task
 
+import com.github.patrick.hypercore.Hyper.hyperCreepers
+import com.github.patrick.hypercore.Hyper.hyperPlayer
 import com.github.patrick.hypercore.Hyper.hyperSkeletons
+import com.github.patrick.hypercore.Hyper.hyperTask
+import com.github.patrick.hypercore.Hyper.hyperZombies
 
 class HyperScheduler : Runnable {
     override fun run() {
+        hyperPlayer?.let {
+            if (hyperTask == null) {
+                val border = it.world.worldBorder
+                border.center = it.location
+                border.size = 16.0
+                border.warningDistance = 1
+                hyperTask = HyperWorldBorderTask(it)
+            } else {
+                hyperTask?.run()
+            }
+        }
+
         hyperSkeletons.removeIf { !it.entity.isValid || it.entity.isDead }
-        hyperSkeletons.forEach { it.shoot() }
+        hyperSkeletons.forEach { it.update() }
+
+        hyperCreepers.forEach {
+            val entity = it.value.entity
+            if (!entity.isValid || entity.isDead) hyperCreepers.remove(it.key)
+        }
+        hyperCreepers.values.forEach { it.update() }
+
+        hyperZombies.removeIf { !it.entity.isValid || it.entity.isDead }
+        hyperZombies.forEach { it.update() }
     }
 }

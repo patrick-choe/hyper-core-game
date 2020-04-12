@@ -19,10 +19,4 @@
 
 package com.github.patrick.hypercore.entity
 
-import org.bukkit.entity.LivingEntity
-
-interface HyperSkeleton {
-    fun shoot(): Unit?
-
-    val entity: LivingEntity
-}
+interface HyperSkeleton : HyperEntity

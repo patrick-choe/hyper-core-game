@@ -17,25 +17,10 @@
  * Contact me on <mailpatrickkr@gmail.com>
  */
 
-package com.github.patrick.hypercore
+package com.github.patrick.hypercore.entity
 
-import com.github.noonmaru.tap.LibraryLoader.load
-import com.github.patrick.hypercore.entity.HyperCreeper
-import com.github.patrick.hypercore.entity.HyperEntityManager
-import com.github.patrick.hypercore.entity.HyperSkeleton
-import com.github.patrick.hypercore.entity.HyperZombie
-import org.bukkit.entity.Player
+import org.bukkit.Location
 
-object Hyper {
-    val ENTITY: HyperEntityManager = load(HyperEntityManager::class.java)
-
-    var hyperPlayer: Player? = null
-
-    var hyperTask: Runnable? = null
-
-    val hyperSkeletons = HashSet<HyperSkeleton>()
-
-    val hyperCreepers = HashMap<Int, HyperCreeper>()
-
-    val hyperZombies = HashSet<HyperZombie>()
+interface HyperEntityManager {
+    fun registerHyperEntities()
 }

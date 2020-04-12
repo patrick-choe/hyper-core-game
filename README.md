@@ -1,4 +1,4 @@
-# Sample Plugin
+# HyperCore
 
 [![Build Status](https://travis-ci.org/patrick-mc/hyper-core-game.svg?branch=master)](https://travis-ci.com/patrick-mc/hyper-core-game)
 [![Twitch Status](https://img.shields.io/twitch/status/patrickkr)](https://twitch.tv/patrickkr)
