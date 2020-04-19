@@ -1,7 +1,7 @@
 package com.github.patrick.hypercore.v1_12_R1.entity
 
-import com.github.noonmaru.customentity.CustomEntityPacket.register
-import com.github.noonmaru.customentity.CustomEntityPacket.scale
+import com.github.patrick.customentity.CustomEntityPacket.register
+import com.github.patrick.customentity.CustomEntityPacket.scale
 import com.github.patrick.hypercore.Hyper.hyperZombies
 import com.github.patrick.hypercore.entity.HyperZombie
 import net.minecraft.server.v1_12_R1.AxisAlignedBB

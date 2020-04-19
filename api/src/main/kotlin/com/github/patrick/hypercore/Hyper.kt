@@ -19,15 +19,17 @@
 
 package com.github.patrick.hypercore
 
-import com.github.noonmaru.tap.LibraryLoader.load
 import com.github.patrick.hypercore.entity.HyperCreeper
 import com.github.patrick.hypercore.entity.HyperEntityManager
 import com.github.patrick.hypercore.entity.HyperSkeleton
 import com.github.patrick.hypercore.entity.HyperZombie
+import com.github.patrick.utils.bukkit.BukkitClassLoader.getBukkitVersion
+import com.github.patrick.utils.bukkit.BukkitClassLoader.load
+import org.bukkit.Bukkit.getServer
 import org.bukkit.entity.Player
 
 object Hyper {
-    val ENTITY: HyperEntityManager = load(HyperEntityManager::class.java)
+    val ENTITY: HyperEntityManager = load(HyperEntityManager::class.java, "NMS", getBukkitVersion(getServer()))
 
     var hyperPlayer: Player? = null
 

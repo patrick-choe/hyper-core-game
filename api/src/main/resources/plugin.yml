@@ -1,5 +1,5 @@
 name: HyperCore
-version: 0.1-beta
+version: 0.3-beta
 description: A sample plugin for spigot 1.12.2
 api-version: "1.12"
 load: POSTWORLD
@@ -7,7 +7,7 @@ author: PatrickKR
 website: https://github.com/patrick-mc
 main: com.github.patrick.hypercore.plugin.HyperCorePlugin
 database: false
-depend: [Tap, Kotlin]
+depend: [Tap, Kotlin, CustomEntity]
 prefix: HYPER
 commands:
   hyper:

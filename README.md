@@ -32,7 +32,7 @@
 >
 >...
 >dependencies {
->    implementation 'com.github.patrick-mc:hyper-core-game:0.1-SNAPSHOT'
+>    implementation 'com.github.patrick-mc:hyper-core-game:0.3-beta'
 >}
 >```
 > ---
@@ -47,6 +47,6 @@
 >
 >...
 >dependencies {
->    implementation("com.github.patrick-mc:hyper-core-game:0.1-SNAPSHOT")
+>    implementation("com.github.patrick-mc:hyper-core-game:0.3-beta")
 >}
 >```
