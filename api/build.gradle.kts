@@ -20,7 +20,7 @@
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
-    compileOnly("com.github.patrick-mc:kotlin-utils:0.3-beta")
+    implementation("com.github.patrick-mc:kotlin-utils:0.3-beta")
 }
 
 tasks {
