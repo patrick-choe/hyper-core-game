@@ -19,8 +19,6 @@
 
 package com.github.patrick.hypercore.entity
 
-import org.bukkit.Location
-
 interface HyperEntityManager {
     fun registerHyperEntities()
 }

@@ -31,6 +31,6 @@ class NMSHyperEntityManager : HyperEntityManager {
         registerHyperEntity(54, "Zombie", NMSHyperZombie::class.java)
     }
 
-    private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity?>) = getInstance().putCustomEntity(id, name, entityClass)
+    private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity?>) = getInstance()?.putCustomEntity(id, name, entityClass)
 
 }

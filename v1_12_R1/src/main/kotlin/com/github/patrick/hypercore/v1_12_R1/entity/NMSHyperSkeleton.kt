@@ -39,7 +39,7 @@ import net.minecraft.server.v1_12_R1.PathfinderGoalRandomStrollLand
 import net.minecraft.server.v1_12_R1.SoundEffects.gW
 import net.minecraft.server.v1_12_R1.World
 import org.bukkit.Bukkit.getLogger
-import org.bukkit.Material
+import org.bukkit.Material.BOW
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory.callEntityShootBowEvent
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.CUSTOM
@@ -54,16 +54,16 @@ class NMSHyperSkeleton(world: World) : EntitySkeleton(world), HyperSkeleton {
         getWorld().addEntity(this, CUSTOM)
         getLogger().info("HyperSKELETON")
         hyperSkeletons.add(this)
-        (bukkitEntity as LivingEntity).equipment.itemInMainHand = ItemStack(Material.BOW)
+        (bukkitEntity as LivingEntity).equipment.itemInMainHand = ItemStack(BOW)
     }
 
     override val entity = bukkitEntity as LivingEntity
 
-    override fun update(): Unit? = goalTarget?.run { a(this, ItemBow.b(cL())) }
+    override fun update() = goalTarget?.run { a(this, ItemBow.b(cL())) }
 
     override fun a(target: EntityLiving, damage: Float) {
         val itemStack = getEquipment(OFFHAND)
-        val entityArrow = if (itemStack.item === SPECTRAL_ARROW) {
+        val arrow = if (itemStack.item === SPECTRAL_ARROW) {
             val entitySpectralArrow = EntitySpectralArrow(world, this)
             entitySpectralArrow.a(this, damage)
             entitySpectralArrow
@@ -75,10 +75,10 @@ class NMSHyperSkeleton(world: World) : EntitySkeleton(world), HyperSkeleton {
         }
         val deltaX = target.locX - locX + target.motX
         val deltaZ = target.locZ - locZ + target.motZ
-        entityArrow.shoot(deltaX, target.boundingBox.b + (target.length / 3F) - entityArrow.locY + nextDouble(-0.15, 0.15) + sqrt(deltaX.pow(2) + deltaZ.pow(2)) / 12, deltaZ, 2.4F, 0F)
-        val event = callEntityShootBowEvent(this, this.itemInMainHand, entityArrow, 1.2F)
+        arrow.shoot(deltaX, target.boundingBox.b + (target.length / 3F) - arrow.locY + nextDouble(-0.15, 0.15) + sqrt(deltaX.pow(2) + deltaZ.pow(2)) / 12, deltaZ, 2.4F, 0F)
+        val event = callEntityShootBowEvent(this, this.itemInMainHand, arrow, 1.2F)
         if (event.isCancelled) event.projectile.remove() else {
-            if (event.projectile === entityArrow.bukkitEntity) world.addEntity(entityArrow)
+            if (event.projectile === arrow.bukkitEntity) world.addEntity(arrow)
             a(gW, 1F, 1 / (nextDouble(0.8, 1.2).toFloat()))
         }
     }
