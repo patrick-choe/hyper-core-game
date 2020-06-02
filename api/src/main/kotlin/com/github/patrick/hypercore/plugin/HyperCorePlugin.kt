@@ -20,15 +20,11 @@
 package com.github.patrick.hypercore.plugin
 
 import com.github.patrick.hypercore.Hyper.ENTITY
-import com.github.patrick.hypercore.Hyper.hyperCreepers
 import com.github.patrick.hypercore.command.HyperCommand
 import com.github.patrick.hypercore.listener.HyperListener
 import com.github.patrick.hypercore.task.HyperScheduler
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Bukkit.getScheduler
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 @Suppress("unused", "UsePropertyAccessSyntax")

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 PatrickKR
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
@@ -32,5 +33,4 @@ class NMSHyperEntityManager : HyperEntityManager {
     }
 
     private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity?>) = getInstance()?.putCustomEntity(id, name, entityClass)
-
 }
