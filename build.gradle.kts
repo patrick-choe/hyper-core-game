@@ -1,7 +1,7 @@
 plugins {
     `maven-publish`
     signing
-    kotlin("jvm") version "1.3.71"
+    kotlin("jvm") version "1.3.72"
     id("org.jetbrains.dokka") version "0.10.0"
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
@@ -15,10 +15,13 @@ allprojects {
     repositories {
         maven("https://repo.maven.apache.org/maven2/")
         maven("https://dl.bintray.com/kotlin/dokka")
+        maven("https://jitpack.io/")
     }
 
     dependencies {
         compileOnly(kotlin("stdlib-jdk8"))
+        compileOnly("com.github.noonmaru:custom-entity-bukkit:1.0")
+        compileOnly("com.github.noonmaru:tap:1.0.1")
     }
 
     tasks {

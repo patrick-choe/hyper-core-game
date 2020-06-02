@@ -19,6 +19,7 @@
 
 package com.github.patrick.hypercore.task
 
+import com.github.noonmaru.customentity.CustomEntityPacket.unregister
 import com.github.patrick.hypercore.Hyper.hyperCreepers
 import com.github.patrick.hypercore.Hyper.hyperPlayer
 import com.github.patrick.hypercore.Hyper.hyperSkeletons
@@ -42,13 +43,16 @@ class HyperScheduler : Runnable {
         hyperSkeletons.removeIf { !it.entity.isValid || it.entity.isDead }
         hyperSkeletons.forEach { it.update() }
 
-        hyperCreepers.forEach {
-            val entity = it.value.entity
-            if (!entity.isValid || entity.isDead) hyperCreepers.remove(it.key)
+        setOf(hyperCreepers, hyperZombies).forEach {
+            it.forEach entry@{ entry ->
+                val entity = entry.value.entity
+                if (!entity.isValid || entity.isDead) {
+                    hyperCreepers.remove(entry.key)
+                    unregister(entry.key).sendAll()
+                    return@entry
+                }
+                entry.value.update()
+            }
         }
-        hyperCreepers.values.forEach { it.update() }
-
-        hyperZombies.removeIf { !it.entity.isValid || it.entity.isDead }
-        hyperZombies.forEach { it.update() }
     }
 }

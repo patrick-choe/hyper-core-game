@@ -1,7 +1,7 @@
 package com.github.patrick.hypercore.v1_12_R1.entity
 
-import com.github.patrick.customentity.CustomEntityPacket.colorAndScale
-import com.github.patrick.customentity.CustomEntityPacket.register
+import com.github.noonmaru.customentity.CustomEntityPacket.colorAndScale
+import com.github.noonmaru.customentity.CustomEntityPacket.register
 import com.github.patrick.hypercore.Hyper.hyperCreepers
 import com.github.patrick.hypercore.entity.HyperCreeper
 import net.minecraft.server.v1_12_R1.AxisAlignedBB

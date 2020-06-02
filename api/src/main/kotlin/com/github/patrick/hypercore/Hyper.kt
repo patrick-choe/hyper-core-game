@@ -29,7 +29,7 @@ import org.bukkit.Bukkit.getServer
 import org.bukkit.entity.Player
 
 object Hyper {
-    val ENTITY: HyperEntityManager = load(HyperEntityManager::class.java, "NMS", getBukkitVersion(getServer()))
+    val ENTITY = requireNotNull(load(HyperEntityManager::class.java, "NMS", getBukkitVersion(getServer()))) { "Unable to load NMS class." }
 
     var hyperPlayer: Player? = null
 
@@ -39,5 +39,5 @@ object Hyper {
 
     val hyperCreepers = HashMap<Int, HyperCreeper>()
 
-    val hyperZombies = HashSet<HyperZombie>()
+    val hyperZombies = HashMap<Int, HyperZombie>()
 }
