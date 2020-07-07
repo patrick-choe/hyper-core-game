@@ -20,9 +20,7 @@
 
 package com.github.patrick.hypercore.listener
 
-import com.github.patrick.hypercore.Hyper.hyperCreepers
-import com.github.patrick.hypercore.Hyper.hyperPlayer
-import com.github.patrick.hypercore.Hyper.hyperTask
+import com.github.patrick.hypercore.Hyper
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
@@ -31,7 +29,7 @@ import org.bukkit.event.entity.PlayerDeathEvent
 class HyperListener : Listener {
     @EventHandler
     fun onTarget(event: EntityTargetLivingEntityEvent) {
-        hyperCreepers[event.entity.entityId]?.let {
+        Hyper.hyperCreepers[event.entity.entityId]?.let {
             event.isCancelled = true
             if (it.explosionStart == -1) it.explosionStart = it.entity.ticksLived
         }
@@ -39,13 +37,15 @@ class HyperListener : Listener {
 
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
-        event.entity.run {
-            if (this == hyperPlayer) {
-                hyperPlayer = null
-                hyperTask = null
-                world.worldBorder.run {
-                    setCenter(0.0, 0.0)
-                    size = 60000000.0
+        with(Hyper) {
+            event.entity.run {
+                if (this == hyperPlayer) {
+                    hyperPlayer = null
+                    hyperTask = null
+                    world.worldBorder.run {
+                        setCenter(0.0, 0.0)
+                        size = 60000000.0
+                    }
                 }
             }
         }

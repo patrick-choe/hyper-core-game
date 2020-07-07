@@ -20,42 +20,41 @@
 
 package com.github.patrick.hypercore.v1_12_R1.entity
 
-import com.github.patrick.hypercore.Hyper.hyperSkeletons
+import com.github.patrick.hypercore.Hyper
 import com.github.patrick.hypercore.entity.HyperSkeleton
 import net.minecraft.server.v1_12_R1.EntityHuman
 import net.minecraft.server.v1_12_R1.EntityLiving
 import net.minecraft.server.v1_12_R1.EntitySkeleton
 import net.minecraft.server.v1_12_R1.EntitySpectralArrow
 import net.minecraft.server.v1_12_R1.EntityTippedArrow
-import net.minecraft.server.v1_12_R1.EnumItemSlot.OFFHAND
+import net.minecraft.server.v1_12_R1.EnumItemSlot
 import net.minecraft.server.v1_12_R1.ItemBow
-import net.minecraft.server.v1_12_R1.Items.SPECTRAL_ARROW
-import net.minecraft.server.v1_12_R1.Items.TIPPED_ARROW
+import net.minecraft.server.v1_12_R1.Items
 import net.minecraft.server.v1_12_R1.PathfinderGoalFloat
 import net.minecraft.server.v1_12_R1.PathfinderGoalHurtByTarget
 import net.minecraft.server.v1_12_R1.PathfinderGoalLookAtPlayer
 import net.minecraft.server.v1_12_R1.PathfinderGoalNearestAttackableTarget
 import net.minecraft.server.v1_12_R1.PathfinderGoalRandomLookaround
 import net.minecraft.server.v1_12_R1.PathfinderGoalRandomStrollLand
-import net.minecraft.server.v1_12_R1.SoundEffects.gW
+import net.minecraft.server.v1_12_R1.SoundEffects
 import net.minecraft.server.v1_12_R1.World
 import org.bukkit.Bukkit.getLogger
-import org.bukkit.Material.BOW
+import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.event.CraftEventFactory.callEntityShootBowEvent
 import org.bukkit.entity.LivingEntity
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.CUSTOM
+import org.bukkit.event.entity.CreatureSpawnEvent
 import org.bukkit.inventory.ItemStack
 import kotlin.math.pow
 import kotlin.math.sqrt
-import kotlin.random.Random.Default.nextDouble
+import kotlin.random.Random
 
 @Suppress("LeakingThis")
 class NMSHyperSkeleton(world: World) : EntitySkeleton(world), HyperSkeleton {
     init {
-        getWorld().addEntity(this, CUSTOM)
+        getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM)
         getLogger().info("HyperSKELETON")
-        hyperSkeletons.add(this)
-        (bukkitEntity as LivingEntity).equipment.itemInMainHand = ItemStack(BOW)
+        Hyper.hyperSkeletons.add(this)
+        (bukkitEntity as LivingEntity).equipment.itemInMainHand = ItemStack(Material.BOW)
     }
 
     override val entity = bukkitEntity as LivingEntity
@@ -63,24 +62,24 @@ class NMSHyperSkeleton(world: World) : EntitySkeleton(world), HyperSkeleton {
     override fun update() = goalTarget?.run { a(this, ItemBow.b(cL())) }
 
     override fun a(target: EntityLiving, damage: Float) {
-        val itemStack = getEquipment(OFFHAND)
-        val arrow = if (itemStack.item === SPECTRAL_ARROW) {
+        val itemStack = getEquipment(EnumItemSlot.OFFHAND)
+        val arrow = if (itemStack.item === Items.SPECTRAL_ARROW) {
             val entitySpectralArrow = EntitySpectralArrow(world, this)
             entitySpectralArrow.a(this, damage)
             entitySpectralArrow
         } else {
             val entityArrow = EntityTippedArrow(world, this)
             entityArrow.a(this, damage)
-            if (itemStack.item === TIPPED_ARROW) entityArrow.a(itemStack)
+            if (itemStack.item === Items.TIPPED_ARROW) entityArrow.a(itemStack)
             entityArrow
         }
         val deltaX = target.locX - locX + target.motX
         val deltaZ = target.locZ - locZ + target.motZ
-        arrow.shoot(deltaX, target.boundingBox.b + (target.length / 3F) - arrow.locY + nextDouble(-0.15, 0.15) + sqrt(deltaX.pow(2) + deltaZ.pow(2)) / 12, deltaZ, 2.4F, 0F)
+        arrow.shoot(deltaX, target.boundingBox.b + (target.length / 3F) - arrow.locY + Random.nextDouble(-0.15, 0.15) + sqrt(deltaX.pow(2) + deltaZ.pow(2)) / 12, deltaZ, 2.4F, 0F)
         val event = callEntityShootBowEvent(this, this.itemInMainHand, arrow, 1.2F)
         if (event.isCancelled) event.projectile.remove() else {
             if (event.projectile === arrow.bukkitEntity) world.addEntity(arrow)
-            a(gW, 1F, 1 / (nextDouble(0.8, 1.2).toFloat()))
+            a(SoundEffects.gW, 1F, 1 / (Random.nextDouble(0.8, 1.2).toFloat()))
         }
     }
 

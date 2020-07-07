@@ -20,9 +20,8 @@
 
 package com.github.patrick.hypercore.v1_12_R1.entity
 
-import com.github.noonmaru.customentity.CustomEntityPacket.register
-import com.github.noonmaru.customentity.CustomEntityPacket.scale
-import com.github.patrick.hypercore.Hyper.hyperZombies
+import com.github.noonmaru.customentity.CustomEntityPacket
+import com.github.patrick.hypercore.Hyper
 import com.github.patrick.hypercore.entity.HyperZombie
 import net.minecraft.server.v1_12_R1.AxisAlignedBB
 import net.minecraft.server.v1_12_R1.EntityHuman
@@ -37,19 +36,19 @@ import net.minecraft.server.v1_12_R1.PathfinderGoalRandomStrollLand
 import net.minecraft.server.v1_12_R1.PathfinderGoalZombieAttack
 import net.minecraft.server.v1_12_R1.World
 import org.bukkit.entity.LivingEntity
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.CUSTOM
+import org.bukkit.event.entity.CreatureSpawnEvent
 
 class NMSHyperZombie(world: World) : EntityZombie(world), HyperZombie {
     init {
-        getWorld().addEntity(this, CUSTOM)
-        hyperZombies[id] = this
-        register(id).sendAll()
+        getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM)
+        Hyper.hyperZombies[id] = this
+        CustomEntityPacket.register(id).sendAll()
     }
     override val entity = bukkitEntity as LivingEntity
 
     override fun update() {
         val scale = health / 100
-        scale(id, scale, scale, scale, 1).sendAll()
+        CustomEntityPacket.scale(id, scale, scale, scale, 1).sendAll()
         a(AxisAlignedBB(locX - 0.3 * scale, locY, locZ - 0.3 * scale, locX + 0.3 * scale, locY + 1.9 * scale, locZ + 0.3 * scale))
     }
 

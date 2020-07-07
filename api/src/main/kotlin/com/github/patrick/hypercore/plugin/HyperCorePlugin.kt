@@ -27,11 +27,11 @@ import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Bukkit.getScheduler
 import org.bukkit.plugin.java.JavaPlugin
 
-@Suppress("unused", "UsePropertyAccessSyntax")
+@Suppress("unused")
 class HyperCorePlugin : JavaPlugin() {
     override fun onEnable() {
         ENTITY.registerHyperEntities()
-        getCommand("hyper").setExecutor(HyperCommand())
+        getCommand("hyper").executor = HyperCommand()
         getScheduler().runTaskTimer(this, HyperScheduler(), 0, 1)
         getPluginManager().registerEvents(HyperListener(), this)
     }

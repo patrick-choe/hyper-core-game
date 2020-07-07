@@ -21,7 +21,6 @@
 package com.github.patrick.hypercore.v1_12_R1.entity
 
 import com.github.patrick.hypercore.entity.HyperEntityManager
-import com.github.patrick.hypercore.v1_12_R1.entity.NMSHyperEntityRegistry.getInstance
 import net.minecraft.server.v1_12_R1.Entity
 
 @Suppress("unused")
@@ -32,5 +31,5 @@ class NMSHyperEntityManager : HyperEntityManager {
         registerHyperEntity(54, "Zombie", NMSHyperZombie::class.java)
     }
 
-    private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity?>) = getInstance()?.putCustomEntity(id, name, entityClass)
+    private fun registerHyperEntity(id: Int, name: String, entityClass: Class<out Entity>) = NMSHyperEntityRegistry.getInstance()?.putCustomEntity(id, name, entityClass)
 }

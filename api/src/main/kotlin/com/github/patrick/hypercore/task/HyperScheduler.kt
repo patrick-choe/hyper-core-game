@@ -21,38 +21,36 @@
 package com.github.patrick.hypercore.task
 
 import com.github.noonmaru.customentity.CustomEntityPacket.unregister
-import com.github.patrick.hypercore.Hyper.hyperCreepers
-import com.github.patrick.hypercore.Hyper.hyperPlayer
-import com.github.patrick.hypercore.Hyper.hyperSkeletons
-import com.github.patrick.hypercore.Hyper.hyperTask
-import com.github.patrick.hypercore.Hyper.hyperZombies
+import com.github.patrick.hypercore.Hyper
 
 class HyperScheduler : Runnable {
     override fun run() {
-        hyperPlayer?.let {
-            if (hyperTask == null) {
-                val border = it.world.worldBorder
-                border.center = it.location
-                border.size = 16.0
-                border.warningDistance = 1
-                hyperTask = HyperWorldBorderTask(it)
-            } else {
-                hyperTask?.run()
-            }
-        }
-
-        hyperSkeletons.removeIf { !it.entity.isValid || it.entity.isDead }
-        hyperSkeletons.forEach { it.update() }
-
-        setOf(hyperCreepers, hyperZombies).forEach {
-            it.forEach entry@{ entry ->
-                val entity = entry.value.entity
-                if (!entity.isValid || entity.isDead) {
-                    hyperCreepers.remove(entry.key)
-                    unregister(entry.key).sendAll()
-                    return@entry
+        with(Hyper) {
+            hyperPlayer?.let {
+                if (hyperTask == null) {
+                    val border = it.world.worldBorder
+                    border.center = it.location
+                    border.size = 16.0
+                    border.warningDistance = 1
+                    hyperTask = HyperWorldBorderTask(it)
+                } else {
+                    hyperTask?.run()
                 }
-                entry.value.update()
+            }
+
+            hyperSkeletons.removeIf { !it.entity.isValid || it.entity.isDead }
+            hyperSkeletons.forEach { it.update() }
+
+            setOf(hyperCreepers, hyperZombies).forEach {
+                it.forEach entry@{ entry ->
+                    val entity = entry.value.entity
+                    if (!entity.isValid || entity.isDead) {
+                        hyperCreepers.remove(entry.key)
+                        unregister(entry.key).sendAll()
+                        return@entry
+                    }
+                    entry.value.update()
+                }
             }
         }
     }

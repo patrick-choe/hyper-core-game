@@ -20,7 +20,6 @@
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
-    implementation("com.github.patrick-mc:kotlin-utils:0.3-beta")
 }
 
 tasks {
@@ -49,7 +48,7 @@ tasks {
 try {
     publishing {
         publications {
-            create<MavenPublication>("customEntity") {
+            create<MavenPublication>("hyperCoreGame") {
                 artifactId = if (project.name == "api") parent?.name else "${parent?.name}-${project.name}"
                 from(components["java"])
 
@@ -75,9 +74,9 @@ try {
                 }
 
                 pom {
-                    name.set("custom-entity-bukkit")
-                    description.set("A custom entity NMS library for bukkit server")
-                    url.set("https://github.com/patrick-mc/custom-entity-bukkit")
+                    name.set("hyper-core-game")
+                    description.set("A hyper crazy game for bukkit")
+                    url.set("https://github.com/patrick-mc/hyper-core-game")
 
                     licenses {
                         license {
@@ -98,9 +97,9 @@ try {
                     }
 
                     scm {
-                        connection.set("scm:git:git://github.com/patrick-mc/custom-entity-bukkit.git")
-                        developerConnection.set("scm:git:ssh://github.com:patrick-mc/custom-entity-bukkit.git")
-                        url.set("https://github.com/patrick-mc/custom-entity-bukkit")
+                        connection.set("scm:git:git://github.com/patrick-mc/hyper-core-game.git")
+                        developerConnection.set("scm:git:ssh://github.com:patrick-mc/hyper-core-game.git")
+                        url.set("https://github.com/patrick-mc/hyper-core-game")
                     }
                 }
             }
@@ -112,4 +111,4 @@ try {
         sign(tasks["jar"], tasks["sourcesJar"], tasks["dokkaJar"])
         sign(publishing.publications["customEntity"])
     }
-} catch (e: groovy.lang.MissingPropertyException) {}
+} catch (ignored: groovy.lang.MissingPropertyException) {}

@@ -20,7 +20,7 @@
 
 package com.github.patrick.hypercore.command
 
-import com.github.patrick.hypercore.Hyper.hyperPlayer
+import com.github.patrick.hypercore.Hyper
 import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.Bukkit.getPlayerExact
 import org.bukkit.command.Command
@@ -34,7 +34,7 @@ class HyperCommand : CommandExecutor, TabCompleter {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isNotEmpty()) {
             getPlayerExact(args[0])?.let {
-                hyperPlayer = it
+                Hyper.hyperPlayer = it
                 return true
             }
             if (args[0] == "help") {
