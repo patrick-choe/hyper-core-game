@@ -27,25 +27,39 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
-import org.bukkit.entity.Player
-import kotlin.streams.toList
 
 class HyperCommand : CommandExecutor, TabCompleter {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isNotEmpty()) {
-            getPlayerExact(args[0])?.let {
-                Hyper.hyperPlayer = it
-                return true
+            when (args.count()) {
+                2 -> {
+                    when (args[1].toLowerCase()) {
+                        "worldborder", "border" -> getPlayerExact(args[0])?.let {
+                            Hyper.HYPER_BORDER_PLAYER = it
+                            return true
+                        }
+                        "block" -> getPlayerExact(args[0])?.let {
+                            Hyper.HYPER_BLOCK_PLAYER = it
+                            return true
+                        }
+                    }
+                }
             }
             if (args[0] == "help") {
-                sender.sendMessage("/$label <Player Name> to start hyper")
+                sender.sendMessage("/$label <Player> <Type> to start hyper")
                 return true
             }
         }
         return false
     }
 
-    override fun onTabComplete(sender: CommandSender, command: Command, alias: String, args: Array<out String>) =
-        if (args.size == 1) getOnlinePlayers().stream().map(Player::getName).toList().filter { it.startsWith(args[0]) }
-        else emptyList()
+    override fun onTabComplete(sender: CommandSender, command: Command, alias: String, args: Array<out String>): List<String> {
+        return when (args.count()) {
+            1 -> getOnlinePlayers().map { it.name }.filter(args[0])
+            2 -> listOf("border", "worldborder", "block").filter(args[1])
+            else -> emptyList()
+        }
+    }
 }
+
+private fun List<String>.filter(keyword: String) = filter { it.toLowerCase().startsWith(keyword.toLowerCase()) }

@@ -23,12 +23,11 @@ package com.github.patrick.hypercore.task
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 
-class HyperWorldBorderTask(private val player: Player) : Runnable {
+class HyperBorderTask(private val player: Player) : Runnable {
     override fun run() {
-        val border = player.world.worldBorder
-        val direction = player.location.direction.normalize()
-        if (direction.x == 0.0 && direction.z == 0.0) return
-        val vector = Vector(direction.x, 0.0, direction.z)
-        border.center = border.center.add(vector.multiply(0.1))
+        player.world.worldBorder.run {
+            val direction = player.location.direction.normalize()
+            center = center.add(Vector(direction.x, 0.0, direction.z).multiply(0.1))
+        }
     }
 }

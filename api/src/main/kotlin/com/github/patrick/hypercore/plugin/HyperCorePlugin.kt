@@ -29,7 +29,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 @Suppress("unused")
 class HyperCorePlugin : JavaPlugin() {
+    companion object {
+        lateinit var INSTANCE: HyperCorePlugin
+    }
+
     override fun onEnable() {
+        INSTANCE = this
         ENTITY.registerHyperEntities()
         getCommand("hyper").executor = HyperCommand()
         getScheduler().runTaskTimer(this, HyperScheduler(), 0, 1)

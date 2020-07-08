@@ -41,7 +41,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent
 class NMSHyperZombie(world: World) : EntityZombie(world), HyperZombie {
     init {
         getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM)
-        Hyper.hyperZombies[id] = this
+        Hyper.HYPER_ZOMBIES[id] = this
         CustomEntityPacket.register(id).sendAll()
     }
     override val entity = bukkitEntity as LivingEntity

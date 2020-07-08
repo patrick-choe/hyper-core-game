@@ -36,7 +36,7 @@ class NMSHyperCreeper(world: World) : EntityCreeper(world), HyperCreeper {
 
     init {
         getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM)
-        Hyper.hyperCreepers[id] = this
+        Hyper.HYPER_CREEPERS[id] = this
         CustomEntityPacket.register(id).sendAll()
         forceExplosionKnockback = true
         (bukkitEntity as Creeper).apply {

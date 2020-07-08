@@ -52,8 +52,7 @@ import kotlin.random.Random
 class NMSHyperSkeleton(world: World) : EntitySkeleton(world), HyperSkeleton {
     init {
         getWorld().addEntity(this, CreatureSpawnEvent.SpawnReason.CUSTOM)
-        getLogger().info("HyperSKELETON")
-        Hyper.hyperSkeletons.add(this)
+        Hyper.HYPER_SKELETONS.add(this)
         (bukkitEntity as LivingEntity).equipment.itemInMainHand = ItemStack(Material.BOW)
     }
 

@@ -30,7 +30,7 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     group = "com.github.patrick-mc"
-    version = "0.3-beta"
+    version = "0.4-beta"
 
     repositories {
         maven("https://repo.maven.apache.org/maven2/")

@@ -20,33 +20,70 @@
 
 package com.github.patrick.hypercore.listener
 
+import com.github.noonmaru.tap.packet.Packet
 import com.github.patrick.hypercore.Hyper
+import com.github.patrick.hypercore.block.HyperBlock
+import org.bukkit.Location
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.inventory.EquipmentSlot
+import kotlin.math.log
+import kotlin.random.Random
 
 class HyperListener : Listener {
     @EventHandler
-    fun onTarget(event: EntityTargetLivingEntityEvent) {
-        Hyper.hyperCreepers[event.entity.entityId]?.let {
+    fun onCreeperTargetLivingEntity(event: EntityTargetLivingEntityEvent) {
+        Hyper.HYPER_CREEPERS[event.entity.entityId]?.let {
             event.isCancelled = true
             if (it.explosionStart == -1) it.explosionStart = it.entity.ticksLived
         }
     }
 
     @EventHandler
-    fun onDeath(event: PlayerDeathEvent) {
+    fun onHyperPlayerDeath(event: PlayerDeathEvent) {
         with(Hyper) {
-            event.entity.run {
-                if (this == hyperPlayer) {
-                    hyperPlayer = null
-                    hyperTask = null
-                    world.worldBorder.run {
+            when (val player = event.entity) {
+                HYPER_BORDER_PLAYER -> {
+                    HYPER_BORDER_PLAYER = null
+                    HYPER_BORDER_TASK = null
+                    player.world.worldBorder.run {
                         setCenter(0.0, 0.0)
                         size = 60000000.0
                     }
                 }
+                HYPER_BLOCK_PLAYER -> {
+                    HYPER_BLOCK_TASKS.forEach {
+                        val chance = log(it.tapArmorStands.count().toDouble(), 64.0) * 64 / it.tapArmorStands.count()
+                        it.tapArmorStands.forEach { entry ->
+                            val stand = entry.key
+                            stand.run {
+                                if (Random.nextDouble() < chance) {
+                                    bukkitWorld.dropItemNaturally(Location(bukkitWorld, posX, posY, posZ), stand.getEquipment(EquipmentSlot.HEAD).toItemStack())
+                                }
+                            }
+                            Packet.ENTITY.destroy(stand.id).sendAll()
+                        }
+                    }
+                    HYPER_BLOCK_BUKKIT_TASKS.run {
+                        forEach {
+                            it.cancel()
+                        }
+                        clear()
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun onTreeBreak(event: BlockBreakEvent) {
+        event.block?.run {
+            if (Hyper.WOOD_MATERIAL.contains(type)) {
+                event.isCancelled = true
+                HyperBlock(this)
             }
         }
     }

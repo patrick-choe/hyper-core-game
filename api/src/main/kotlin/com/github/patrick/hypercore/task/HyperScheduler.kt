@@ -26,26 +26,27 @@ import com.github.patrick.hypercore.Hyper
 class HyperScheduler : Runnable {
     override fun run() {
         with(Hyper) {
-            hyperPlayer?.let {
-                if (hyperTask == null) {
+            HYPER_BORDER_PLAYER?.let {
+                if (HYPER_BORDER_TASK == null) {
                     val border = it.world.worldBorder
                     border.center = it.location
                     border.size = 16.0
+                    border.damageBuffer = 2.0
                     border.warningDistance = 1
-                    hyperTask = HyperWorldBorderTask(it)
+                    HYPER_BORDER_TASK = HyperBorderTask(it)
                 } else {
-                    hyperTask?.run()
+                    HYPER_BORDER_TASK?.run()
                 }
             }
 
-            hyperSkeletons.removeIf { !it.entity.isValid || it.entity.isDead }
-            hyperSkeletons.forEach { it.update() }
+            HYPER_SKELETONS.removeIf { !it.entity.isValid || it.entity.isDead }
+            HYPER_SKELETONS.forEach { it.update() }
 
-            setOf(hyperCreepers, hyperZombies).forEach {
+            setOf(HYPER_CREEPERS, HYPER_ZOMBIES).forEach {
                 it.forEach entry@{ entry ->
                     val entity = entry.value.entity
                     if (!entity.isValid || entity.isDead) {
-                        hyperCreepers.remove(entry.key)
+                        HYPER_CREEPERS.remove(entry.key)
                         unregister(entry.key).sendAll()
                         return@entry
                     }
