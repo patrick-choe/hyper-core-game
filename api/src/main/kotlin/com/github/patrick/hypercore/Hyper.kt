@@ -25,7 +25,7 @@ import com.github.patrick.hypercore.entity.HyperCreeper
 import com.github.patrick.hypercore.entity.HyperEntityManager
 import com.github.patrick.hypercore.entity.HyperSkeleton
 import com.github.patrick.hypercore.entity.HyperZombie
-import com.github.patrick.hypercore.task.HyperBlockTask
+import com.github.patrick.hypercore.task.HyperTreeTask
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitTask
@@ -41,9 +41,9 @@ object Hyper {
 
     internal var HYPER_BORDER_TASK: Runnable? = null
 
-    internal val HYPER_BLOCK_BUKKIT_TASKS = HashSet<BukkitTask>()
+    internal val HYPER_TREE_BUKKIT_TASKS = HashSet<BukkitTask>()
 
-    internal val HYPER_BLOCK_TASKS = HashSet<HyperBlockTask>()
+    internal val HYPER_TREE_TASKS = HashSet<HyperTreeTask>()
 
     val HYPER_SKELETONS = HashSet<HyperSkeleton>()
 
@@ -51,5 +51,5 @@ object Hyper {
 
     val HYPER_ZOMBIES = HashMap<Int, HyperZombie>()
 
-    internal val WOOD_MATERIAL = setOf(Material.LOG, Material.LOG_2, Material.LEAVES, Material.LEAVES_2)
+    internal val TREE_MATERIAL = setOf(Material.LOG, Material.LOG_2, Material.LEAVES, Material.LEAVES_2)
 }

@@ -5,7 +5,7 @@ import com.github.noonmaru.tap.entity.TapArmorStand
 import com.github.noonmaru.tap.packet.Packet
 import com.github.patrick.hypercore.Hyper
 import com.github.patrick.hypercore.plugin.HyperCorePlugin
-import com.github.patrick.hypercore.task.HyperBlockTask
+import com.github.patrick.hypercore.task.HyperTreeTask
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
 import java.util.LinkedList
 
-class HyperBlock(init: Block) {
+class HyperTree(init: Block) {
     private val instance = HyperCorePlugin.INSTANCE
     private val blockMap = HashMap<Block, Vector>()
     private val blockQueue = LinkedList<Block>()
@@ -39,7 +39,7 @@ class HyperBlock(init: Block) {
                             getRelative(BlockFace.DOWN)
                     )
                 }.forEach {
-                    if (Hyper.WOOD_MATERIAL.contains(it.type) && !blockMap.contains(it)) {
+                    if (Hyper.TREE_MATERIAL.contains(it.type) && !blockMap.contains(it)) {
                         offer(it)
                         blockMap[it] = it.location.subtract(init.location).toVector()
                     }
@@ -88,9 +88,9 @@ class HyperBlock(init: Block) {
                                     teleport(stand.bukkitEntity, stand.posX + vec.x, stand.posY + vec.y, stand.posZ + vec.z, 0F, 0F, false).sendAll()
                                 }
                             }, 100)
-                            val task = HyperBlockTask(player, baseStand, tapArmorStands)
-                            HYPER_BLOCK_TASKS.add(task)
-                            HYPER_BLOCK_BUKKIT_TASKS.add(runTaskTimer(instance, task, 101, 1))
+                            val task = HyperTreeTask(player, baseStand, tapArmorStands)
+                            HYPER_TREE_TASKS.add(task)
+                            HYPER_TREE_BUKKIT_TASKS.add(runTaskTimer(instance, task, 101, 1))
                         }?: run {
                             runTaskLater(instance, {
                                 start.cancel()

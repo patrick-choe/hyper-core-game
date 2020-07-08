@@ -38,7 +38,7 @@ class HyperCommand : CommandExecutor, TabCompleter {
                             Hyper.HYPER_BORDER_PLAYER = it
                             return true
                         }
-                        "block" -> getPlayerExact(args[0])?.let {
+                        "tree" -> getPlayerExact(args[0])?.let {
                             Hyper.HYPER_BLOCK_PLAYER = it
                             return true
                         }
@@ -56,7 +56,7 @@ class HyperCommand : CommandExecutor, TabCompleter {
     override fun onTabComplete(sender: CommandSender, command: Command, alias: String, args: Array<out String>): List<String> {
         return when (args.count()) {
             1 -> getOnlinePlayers().map { it.name }.filter(args[0])
-            2 -> listOf("border", "worldborder", "block").filter(args[1])
+            2 -> listOf("border", "worldborder", "tree").filter(args[1])
             else -> emptyList()
         }
     }

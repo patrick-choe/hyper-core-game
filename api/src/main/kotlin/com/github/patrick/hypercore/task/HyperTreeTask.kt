@@ -5,7 +5,7 @@ import com.github.noonmaru.tap.packet.Packet
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 
-class HyperBlockTask(private val player: Player, private val baseStand: TapArmorStand, val tapArmorStands: Map<TapArmorStand, Vector>) : Runnable {
+class HyperTreeTask(private val player: Player, private val baseStand: TapArmorStand, val tapArmorStands: Map<TapArmorStand, Vector>) : Runnable {
     private var tick = 0
 
     override fun run() {

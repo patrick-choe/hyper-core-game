@@ -22,7 +22,7 @@ package com.github.patrick.hypercore.listener
 
 import com.github.noonmaru.tap.packet.Packet
 import com.github.patrick.hypercore.Hyper
-import com.github.patrick.hypercore.block.HyperBlock
+import com.github.patrick.hypercore.block.HyperTree
 import org.bukkit.Location
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -55,7 +55,7 @@ class HyperListener : Listener {
                     }
                 }
                 HYPER_BLOCK_PLAYER -> {
-                    HYPER_BLOCK_TASKS.forEach {
+                    HYPER_TREE_TASKS.forEach {
                         val chance = log(it.tapArmorStands.count().toDouble(), 64.0) * 64 / it.tapArmorStands.count()
                         it.tapArmorStands.forEach { entry ->
                             val stand = entry.key
@@ -67,7 +67,7 @@ class HyperListener : Listener {
                             Packet.ENTITY.destroy(stand.id).sendAll()
                         }
                     }
-                    HYPER_BLOCK_BUKKIT_TASKS.run {
+                    HYPER_TREE_BUKKIT_TASKS.run {
                         forEach {
                             it.cancel()
                         }
@@ -81,9 +81,9 @@ class HyperListener : Listener {
     @EventHandler
     fun onTreeBreak(event: BlockBreakEvent) {
         event.block?.run {
-            if (Hyper.WOOD_MATERIAL.contains(type)) {
+            if (Hyper.TREE_MATERIAL.contains(type)) {
                 event.isCancelled = true
-                HyperBlock(this)
+                HyperTree(this)
             }
         }
     }
